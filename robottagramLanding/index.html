@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코딩 센터 랜딩 페이지</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 전체 박스 스타일 */
+        .highlight-box {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 40px auto;
+            text-align: left; /* 텍스트 좌측 정렬 */
+            width: 90%;
+            max-width: 1000px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* 아래 세 개의 작은 사각형 */
+        .highlight-box .highlight-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px; /* 사각형 간의 간격을 조금 더 넓게 조정 */
+        }
+
+        .highlight-box .highlight-section div {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            text-align: left; /* 좌측 정렬 */
+            margin-right: 20px; /* 각 카드 간격을 넓혀줌 */
+        }
+
+        /* 마지막 카드의 margin-right 제거 */
+        .highlight-box .highlight-section div:last-child {
+            margin-right: 0;
+        }
+
+        /* 강조 텍스트 */
+        .highlight-box span {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        /* 각 섹션 제목 스타일 */
+        .highlight-box .highlight-section div h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        /* 카드 스타일 */
+        .course-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 280px;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .course-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .course-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .course-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .course-card p {
+            font-size: 1rem;
+            color: #777;
+        }
+        .course-card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            gap: 32px 24px; /* 카드 간 간격 추가 */
+            padding: 0 40px; /* 양쪽에 공간 추가 */
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 팝업 스타일 */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 70%;
+            max-width: 800px;
+            text-align: left;
+        }
+        .popup-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .popup-content p {
+            font-size: 1rem;
+            color: #333;
+        }
+        .popup-close {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+        .popup-images {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .popup-thumbnails {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .popup-thumbnails img {
+            width: 100px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border 0.2s;
+        }
+        .popup-thumbnails img.selected {
+            border: 2px solid #4CAF50;
+        }
+        .popup-large-image {
+            width: 540px;
+            height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="images/Robottagram_Logo.png" alt="로보타그램 로고" style="display:block;margin:32px auto 8px auto;max-width:220px;width:60vw;height:auto;">
+        <h1 style="text-align:center;font-size:2.5rem;margin-bottom:16px;">로보타그램 에듀케이션 교육과정</h1>
+        <img src="images/education-curriculum.png" alt="로보타그램 에듀케이션 교육과정 대표 이미지" style="max-width:100%;height:auto;display:block;margin:0 auto 24px auto;">
+        <h1 style="text-align:center;font-size:2rem;margin:0 auto 16px auto;max-width:1000px;">| 우리 아이의 미래를 위한 준비된 자신감 Robottagram에서 키워주세요.</h1>
+        
+    </header>
+
+    <!-- 강조 박스 추가 -->
+    <section class="highlight-box">
+        <p>우리 아이들이 살아가야 하는 미래사회에는 어떠한 상황에도 환경에 잘 적응할 수 있는 <span>회복탄력성</span>이 무엇보다도 중요합니다. 이러한 회복탄력성을 성장시키기 위해서는 <span>Robottagram의 다양한 활동과 PBL 수업을 통한 성공과 실패의 많은 경험들</span>이 필요합니다.</p>
+
+        <!-- 아래 세 개의 작은 사각형 -->
+        <div class="highlight-section">
+            <div>
+                <h3>창작의 과정</h3>
+                <p>브릭을 활용한 단순한 <span>창작의 과정</span>을 거쳐 점진적으로 <span>복잡한 구조와 매커니즘</span>을 배워가고 이를 바탕으로 나만의 생각을 확장해갈 수 있습니다.</p>
+            </div>
+            <div>
+                <h3>문제해결과정</h3>
+                <p>놀이처럼 재미있는 문제해결 과정을 통해 프로그램의 기초와 <span>코딩스킬</span>을 키워가며 <span>융합적 사고력</span>과 <span>문제해결력</span>을 성장시켜갈 수 있습니다.</p>
+            </div>
+            <div>
+                <h3>포트폴리오 구성</h3>
+                <p>다양한 프로젝트 활동을 통해 로봇을 설계, 제작, 알고리즘을 구성하는 경험을 기반으로 <span>나만의 포트폴리오</span>를 구성할 수 있습니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="courses">
+        <h2 style="text-align:center;width:100%;margin-bottom:40px;">우리의 교육 과정</h2>
+
+        <div class="course-card-container">
+            <!-- Pre-School Course 카드 -->
+            <div class="course-card" onclick="openPopup('preSchool')">
+                <img src="images/pre-school.png" alt="Pre-School"> <!-- 이미지 경로를 images/ 폴더로 설정 -->
+                <h3>Pre-School</h3>
+                <p>초등학생을 위한 기초 코딩과 로봇 제작 과정입니다.</p>
+            </div>
+
+            <!-- Junior Coding Robot Course 카드 -->
+            <div class="course-card" onclick="openPopup('juniorCoding')">
+                <img src="images/junior-coding.png" alt="주니어 코딩 로봇"> <!-- 이미지 경로를 images/ 폴더로 설정 -->
+                <h3>주니어 코딩 로봇 과정</h3>
+                <p>주니어를 위한 코딩과 로봇 만들기 과정을 제공합니다.</p>
+            </div>
+
+            <!-- Senior Coding Robot Course 카드 -->
+            <div class="course-card" onclick="openPopup('seniorCoding')">
+                <img src="images/senior-coding.png" alt="시니어 코딩 로봇"> <!-- 이미지 경로를 images/ 폴더로 설정 -->
+                <h3>시니어 코딩 로봇 과정</h3>
+                <p>고급 코딩과 로봇 기술을 배우는 과정입니다.</p>
+            </div>
+
+            <!-- Python Robot Course 카드 -->
+            <div class="course-card" onclick="openPopup('pythonRobot')">
+                <img src="images/python-robot.png" alt="파이썬 로봇"> <!-- 이미지 경로를 images/ 폴더로 설정 -->
+                <h3>파이썬 로봇 과정</h3>
+                <p>파이썬을 이용한 로봇 제작과 프로그래밍 과정입니다.</p>
+            </div>
+
+            <!-- Portfolio Course 카드 -->
+            <div class="course-card" onclick="openPopup('portfolio')">
+                <img src="images/portfolio.png" alt="포트폴리오"> <!-- 이미지 경로를 images/ 폴더로 설정 -->
+                <h3>포트폴리오(Portfolio)</h3>
+                <p>자신만의 로봇 포트폴리오를 구성하는 과정입니다.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 팝업 오버레이 -->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-content" id="popup-content">
+            <h3 id="popup-title"></h3>
+            <p id="popup-description"></p>
+
+            <!-- 팝업 내 이미지들 -->
+            <div class="popup-images">
+                <img id="largeImage" src="images/pre-school1.jpg" alt="큰 이미지" class="popup-large-image">
+                <div class="popup-thumbnails">
+                    <img src="images/pre-school1.jpg" alt="이미지 1" class="popup-thumb selected" onclick="changeLargeImage(this)">
+                    <img src="images/pre-school2.png" alt="이미지 2" class="popup-thumb" onclick="changeLargeImage(this)">
+                    <img src="images/pre-school3.png" alt="이미지 3" class="popup-thumb" onclick="changeLargeImage(this)">
+                    <img src="images/pre-school4.jpeg" alt="이미지 4" class="popup-thumb" onclick="changeLargeImage(this)">
+                </div>
+            </div>
+
+            <button class="popup-close" onclick="closePopup()">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        // 각 과정 상세내용
+        const courses = {
+            preSchool: {
+                title: "언플러그드 코딩을 통한 논리적 사고력의 향상",
+                description: "테마파크와 코딩기차 등을 테마로 <strong>논리적인 사고력과 기초탐구능력, 디지털 활용능력</strong>을 함양하고 발전시킬 수 있습니다.<br><br>다양한 에듀케이션 레고제품들을 이용해 재미있는 실험을 통해 유아들의 STEAM(과학, 기술, 공학, 예술, 수학)능력을 키워갈 수 있고, 스마트한 기차를 이용해 직관적으로 코딩의 기초적인 개념을 이해할 수 있습니다."
+            },
+            juniorCoding: {
+                title: "# 컴퓨팅 사고력(CT) 확립과 프로그램의 이해",
+                description: `예비 초등에서 초등 저학년 아이들이 기초적인 코딩을 배우기에 가장 효율적인 교육과정으로<br>
+재미있는 테마에 맞춰 기초적인 코딩의 방법을 알아보고, <strong>컴퓨팅 사고력(CT)</strong>을 키워갈 수 있습니다.<br><br>
+<strong>직관적인 블럭코딩(아이콘, 블럭, 스크래치)</strong>을 통해 아이들이 쉽고 재미있게 프로그램할 수 있으며 센서, 모터를 활용하여 문제를 해결해봄으로써 코딩을 통한 문제해결력의 향상과 디지털 활용능력을 발전시켜갈 수 있습니다.<br><br>
+PC, APP(안드로이드, IOS 등)을 통해 <strong>순차제어, 반복문, 조건문, 연산 등을 활용해</strong> <strong>모터를 제어</strong>할 수 있으며 컬러센서를 이용해 주변환경의 변화와 상황을 판단할 수 있고, 라이트매트릭스를 활용해 재미있고 창의적인 표현이 가능합니다.`
+            },
+            seniorCoding: {
+                title: "# 로봇을 활용한 피지컬 컴퓨팅사이언스의 시작",
+                description: `초등중학년 이상의 아이들이 STEAM활동과 코딩을 배우기에 가장 효율적인 교육과정으로<br>
+블럭코딩을 이용해 로봇을 다양하게 제어해봄으로써 <strong>코딩으로 로봇을 제어하는 경험</strong>을 할 수 있고, <strong>순차제어, 조건문, 반복문, 연산 등의 컴퓨팅적 사고력의 개념을 확립</strong>할 수 있습니다.<br><br>
+단계별로 주제에 맞춰 컨트롤러(허브), 모터, 센서를 이용해 <strong>AI(로봇)의 개념을 이해하고, 제작</strong>할 수 있습니다. 쉽고 재미있는 로봇을 만들어보고, 센서를 이용함으로써 센서 데이터에 대해 이해할 수 있으며 나만의 프로젝트를 진행할 수 있습니다.`
+            },
+            pythonRobot: {
+                title: "파이썬 로봇 과정",
+                description: `## # 확장된 로봇제어와 프로젝트 중점의 수업(PBL)<br><br>
+대표적인 <strong>텍스트코딩 언어인 파이썬을 이용해 로봇을 다양하게 제어</strong>해봄으로써 텍스트 코딩으로 로봇을 디테일하게 제어하는 경험을 할 수 있고, <strong>데이터의 종류와 흐름, 활용에 대해 쉽게 이해</strong>할 수 있습니다.<br><br>
+다양한 개방형 문제를 해결하기 위한 창의적이고 혁신적인 방법을 <strong>팀 또는 개별 프로젝트 베이스 수업(PBL수업)으로 연구하고, 나만의 알고리즘을 구성</strong>할 수 있는 과정입니다.`
+            },
+            portfolio: {
+                title: "포트폴리오(Portfolio)",
+                description: `## # 융합적인 사고력의 향상과 개인포트폴리오 구성<br><br>
+내가 가진 능력과 경험을 바탕으로 <strong>나만의 문제해결법을 고민하고, 솔루션을 구성하여 구현</strong>할 수 있는 방안을 스스로 찾아볼 수 있습니다. 또한 다양한 오브제와 프로그래밍 언어를 활용하여 문제를 해결함으로써 <strong>하드웨어와 소프트웨어를 모두 제어할 수 있는 융합적인 사고력을 키워갈 수 있습니다.</strong><br><br>
+나만의 포트폴리오를 만들기 위한 과정으로 <strong>진학에 유리한 다양한 주제에 대해 연구</strong>합니다. 대회를 위한 미션연구, 환경, 사회적 문제 등에 대한 주제탐구와 머신러닝, 인공지능 등의 개념을 이해할 수 있는 창의적 산출물을 만들어갈 수 있습니다.`
+            }
+        };
+
+        // 팝업 열기 함수
+        function openPopup(course) {
+            const courseData = courses[course];
+            document.getElementById('popup-title').innerHTML = courseData.title;
+            document.getElementById('popup-description').innerHTML = courseData.description;
+            // 과정별 이미지 세트 정의
+            const imageSets = {
+                preSchool: [
+                    'images/pre-school1.jpg',
+                    'images/pre-school2.png',
+                    'images/pre-school3.png',
+                    'images/pre-school4.jpeg'
+                ],
+                juniorCoding: [
+                    'images/junior-coding1.jpg',
+                    'images/junior-coding2.png',
+                    'images/junior-coding3.jpg',
+                    'images/junior-coding4.png'
+                ],
+                seniorCoding: [
+                    'images/senior-coding1.jpg',
+                    'images/senior-coding2.png',
+                    'images/senior-coding3.jpg',
+                    'images/senior-coding4.jpg',
+                    'images/senior-coding5.png',
+                    'images/senior-coding6.png'
+                ],
+                pythonRobot: [
+                    'images/python-robot1.png',
+                    'images/python-robot2.jpg',
+                    'images/python-robot3.jpg',
+                    'images/python-robot4.jpg'
+                ],
+                portfolio: [
+                    'images/portfolio1.png',
+                    'images/portfolio2.jpg',
+                    'images/portfolio3.png',
+                    'images/portfolio4.png'
+                ]
+            };
+            // 썸네일 및 큰 이미지 동적 생성
+            const images = imageSets[course] || imageSets['preSchool'];
+            const largeImage = document.getElementById('largeImage');
+            largeImage.src = images[0];
+            const thumbsDiv = document.querySelector('.popup-thumbnails');
+            thumbsDiv.innerHTML = images.map((src, idx) =>
+                `<img src="${src}" alt="이미지 ${idx+1}" class="popup-thumb${idx===0?' selected':''}" onclick="changeLargeImage(this)">`
+            ).join('');
+            document.getElementById('popup-overlay').style.display = 'flex';
+        }
+
+        // 팝업 닫기 함수
+        function closePopup() {
+            document.getElementById('popup-overlay').style.display = 'none';
+        }
+
+        function changeLargeImage(imgElem) {
+            const largeImage = document.getElementById('largeImage');
+            largeImage.src = imgElem.src;
+            // 썸네일 선택 효과
+            document.querySelectorAll('.popup-thumb').forEach(el => el.classList.remove('selected'));
+            imgElem.classList.add('selected');
+        }
+    </script>
+</body>
+</html>
